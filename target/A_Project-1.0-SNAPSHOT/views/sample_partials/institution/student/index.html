@@ -1,0 +1,126 @@
+<div ng-if="addStudentToggle !== true" class="hpanel hprimary primary  m-t-none">
+    <div class="panel-heading hbuilt">
+        {{institution.name}} - Students 
+        <span class="btn btn-xs btn-primary text-white pull-right" ng-click="addStudentClick()">
+            <i class="fa fa-plus"></i>
+        </span>
+    </div>
+    <div ng-hide="institution.students > 0" class="panel-body p-sm table-responsive">
+        <div class="blockquote">
+            No Students found for this university
+        </div>
+    </div>
+    <div class="panel-body p-sm table-responsive" ng-show="institution.students > 0">
+        <div class="row">
+            <div class="form-group">
+                <label class="col-sm-3 control-label m-t-sm"> {{students_pagination.result}} Results</label>
+                <div class="col-sm-offset-6 col-sm-3">
+                    <input type="text" ng-keyup="studentsFilter(student_name)" ng-model="student_name"
+                           placeholder="Search Student" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div ng-repeat="s in students_pagination.data">
+            <div class="media pointer">
+                <div class="media-left media-middle">
+                    <a class="pull-left btn btn-sm btn-primary font-extra-bold btn-circle text-center">
+                        {{ ((students_limit_length * students_pagination.page_number) - students_limit_length) + ($index + 1)}}
+                    </a>
+                </div>
+                <div class="media-body" data-ui-sref ="home.institution.view.student({studentid:s.studentid})">
+                    <h5 class="text-primary text-capitalize">{{s.studentname}}</h5>
+                    <small class="text-muted text-capitalize">
+                        {{s.course}}
+                    </small>
+                </div>
+                <div class="media-right media-middle">
+                    <button 
+                        class="btn btn-xs btn-outline btn-primary pull-right">
+                        <i class="fa fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="text-right">
+                <ul class="pagination pagination-sm text-muted">
+                    <li>
+                        <a 
+                            class="pointer" 
+                            ng-class="students_pagination.prev.status === false;disabled"
+                            ng-click="studentPagerClicked(students_pagination.prev)" 
+                            ng-disabled="students_pagination.prev.status === false" >
+                            <
+                        </a>
+                    </li>
+                    <li><a class="text-plain">page {{students_pagination.page_number}} of {{students_pagination.pages}}</a></li>
+                    <li>
+                        <a class="pointer" 
+                           ng-click="studentPagerClicked(students_pagination.next)" 
+                           ng-class="students_pagination.next.status === false; disabled"
+                           ng-disabled="students_pagination.next.status === false">
+                            >
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div ng-if="addStudentToggle === true" class="hpanel hprimary primary m-t-none">
+    <div class="panel-heading hbuilt">
+        {{institution.name}} -Add Student 
+        <span class="btn btn-xs btn-primary text-white pull-right" ng-click="addStudentClick()">
+            <i class="fa fa-times"></i>
+        </span>
+    </div>
+    <div class="panel-body p-sm table-responsive">
+        <form ng-submit="addStudent()">
+            <div class="form-group has-feedback {{student_validated.course_response_class}} m-b-sm">
+                <label>Select Course</label>
+                <select ng-model="new_student.course" class="form-control ">
+                    <option value="null">--select a course --</option>
+                    <option ng-repeat="c in courses_data.courses" value="{{c.courseid}}">
+                        {{c.name}}
+                    </option>
+                </select>
+                <div class="help-block">
+                    <label class="text-danger w-lg">{{student_validated.course_response_message}}
+                        <i ng-if="student_validated.course_response_message !== ''" class="fa fa-warning pull-right"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group has-feedback {{student_validated.name_response_class}} m-b-sm">
+                <label>Student Name</label>
+                <input class="form-control" placeholder="Enter Student name(s)" ng-model="new_student.name">
+                <div class="help-block">
+                    <label class="text-danger w-lg">{{student_validated.name_response_message}}
+                        <i ng-if="student_validated.name_response_message !== ''" class="fa fa-warning pull-right"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group has-feedback {{student_validated.dob_response_class}}  m-b-sm">
+                <label>Student Date Of Birth</label>
+                <input class="form-control" type="date" ng-model="new_student.date_of_birth">
+                <div class="help-block">
+                    <label class="text-danger w-lg">{{student_validated.dob_response_message}}
+                        <i ng-if="student_validated.dob_response_message !== ''" class="fa fa-warning pull-right"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group text-right m-b-none">
+                <button 
+                    ng-disabled="student_validated.submit === 'true'"
+                    class="btn  btn-outline btn-primary"
+                    type="reset" ng-click="clearStudentErrors()"> Clear</button>
+                <button 
+                    ng-disabled="student_validated.submit === 'true'"
+                    class="btn btn-primary text-white" >
+                    Submit <i ng-if="student_validated.submit === 'true'" class="fa fa-spin fa-spinner"></i> 
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

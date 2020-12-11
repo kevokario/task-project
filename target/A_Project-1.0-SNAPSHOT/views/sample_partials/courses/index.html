@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="hpanel col-sm-12">
+        <div class="panel-body p-xs" style="padding-bottom: 0px !important">
+            <div id="hbreadcrumb" class="pull-right m-t-lg">
+                <ol class="hbreadcrumb breadcrumb">
+                    <li><a class="pointer" data-ui-sref="home.index()">Home</a></li>
+                    <li class="active">
+                        <span>Courses</span>
+                    </li>
+                </ol>
+            </div>
+            <h3  data-ui-sref="home.index()"
+                 class="pointer font-normal font-bold m-b-xs m-t-xs text-primary" style="display: inline-block">
+                Courses
+            </h3>
+        </div>
+        <div class="panel-body p-xs">
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <input type="text" 
+                               ng-keyup="filterCourses(search_institution_course)" 
+                               ng-model="search_institution_course"  
+                               class="form-control form-control-borderless"
+                               placeholder="Search Course/Institution">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="custom-nav-div">
+        <div  class="pull-left">
+            <label>{{courses_pagination.result}} Results</label>
+        </div>
+        <div class="pull-right">
+            <ul class="pagination text-muted">
+                <li>
+                    <a class="pointer" 
+                       ng-class="courses_pagination.prev.status === false;disabled"
+                       ng-click="CoursesPagerClicked(courses_pagination.prev)" 
+                       ng-disabled="courses_pagination.prev.status === false" >
+                        <
+                    </a>
+                </li>
+                <li><a class="text-plain">page {{courses_pagination.page_number}} of {{courses_pagination.pages}}</a></li>
+                <li>
+                    <a class="pointer" 
+                       ng-click="CoursesPagerClicked(courses_pagination.next)" 
+                       ng-class="courses_pagination.next.status === false; disabled"
+                       ng-disabled="courses_pagination.next.status === false">
+                        >
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+        <div id="course-list" class="hpanel col-sm-12">
+            <div  class="panel-body p-none">
+                <div ng-repeat="c in courses_pagination.data">
+                    <div class="media col-sm-6 pointer">
+                        <div class="media-left media-middle">
+                            <a class="pull-left btn btn-sm btn-primary font-extra-bold btn-circle text-center">
+                                {{ ((courses_limit * courses_pagination.page_number) - courses_limit) + ($index + 1)}}
+                            </a>
+                        </div>
+                        <div class="media-body" data-ui-sref="home.institution.view({institutionid: c.institution.institutionid})" >
+                            <h5 class="text-primary">{{c.name}}<br><small>{{c.institution.name}}</small></h5>
+                            <small class="text-muted">
+                                <strong class="text-primary">{{c.students}}</strong> 
+                                Students Enrolled
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+<!--    <div ng-repeat="c in courses_pagination.data" 
+         class="col-sm-4 col-md-4 col-lg-3 widget-panel">
+        <div   class="panel custom-panel text-center ">
+            <div class="panel-body pointer" 
+                 data-ui-sref="home.institution.view({institutionid: c.institution.institutionid})">
+                <img src="./images/wolverine_square.jpg" alt="Image">
+                <p><strong class="text-primary">{{c.name}}</strong></p>
+                    <small>{{c.institution.name}}</small><br>
+                    <strong class="text-primary">{{c.students}}</strong> <small> Student(s) Enrolled</small>
+            </div>
+        </div>
+    </div>-->
+
+</div>

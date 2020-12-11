@@ -1,0 +1,147 @@
+<div class="row">
+    <div class="hpanel hblue m-b-none col-sm-12">
+        <div class="panel-heading" style="padding-bottom: 1px">
+            <span class="text-primary title-text">
+                <span 
+                    class="pointer" 
+                    data-ui-sref='home.institution.view({institutionid:institution.institutionid})'>
+                    Course : {{course.name}}
+                </span>
+                <button class="btn btn-xs btn-primary pull-right" ng-click="editCourseClick()"><i class="fa fa-pencil"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+<div class=" row m-b-md">
+    <div class="col-sm-3 widget-panel widget-label">
+        <div class="hpanel m-b-none">
+            <div class="panel-body p-sm">
+                <p class="pull-left m-b-none text-primary text-bold">
+                    Course Levels<br> 
+                    <span class="text-center border-bottom">{{academic_level.length}}</span>
+                </p>
+                <span class="text-primary custom-icon-holder pull-right">
+                    <i class="pe pe-7s-study fa-lg"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 widget-panel widget-label">
+        <div class="hpanel m-b-none">
+            <div class="panel-body p-sm">
+                <p class="pull-left m-b-none text-primary text-bold">
+                    Course Years<br> 
+                    <span class="text-center border-bottom"> {{academic_years.length}} </span>
+                </p>
+                <span class="text-primary custom-icon-holder pull-right">
+                    <i class="pe pe-7s-date fa-lg"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 widget-panel widget-label">
+        <div class="hpanel m-b-none">
+            <div class="panel-body p-sm">
+                <p class="pull-left m-b-none text-primary text-bold">
+                    Course Units<br> 
+                    <span class="text-center border-bottom">{{units.length}}</span>
+                </p>
+                <span class="text-primary custom-icon-holder pull-right">
+                    <i class="pe pe-7s-notebook fa-lg"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 widget-panel widget-label">
+        <div class="hpanel m-b-none">
+            <div class="panel-body p-sm">
+                <p class="pull-left m-b-none text-primary text-bold">
+                    Students<br> 
+                    <span class="text-center border-bottom">{{course.students}}</span>
+                </p>
+                <span class="text-primary custom-icon-holder pull-right">
+                    <i class="pe pe-7s-users fa-lg"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div  class="row">  
+    <div ng-if="editCourseToggle !== true" class="col-sm-12">
+        <ul class="nav nav-tabs border-primary">
+            <li class="active">
+                <a  data-toggle="tab" data-target="#academic-levels">
+                    <span class="show-on-small">
+                        <i class="pe pe-7s-study fa-lg"></i>
+                    </span> <span class="show-on-large">Course Levels</span>
+                </a>
+            </li>
+            <li>
+                <a  data-toggle="tab" data-target="#academic-years">
+                    <span class="show-on-small">
+                        <i class="pe pe-7s-date fa-lg"></i>
+                    </span>
+                    <span class="show-on-large">Course Years</span>
+                </a>
+            </li>
+            <li>
+                <a  data-toggle="tab" data-target="#course-units">
+                    <span class="show-on-small">
+                        <i class="pe pe-7s-notebook fa-lg"></i>
+                    </span> <span class="show-on-large">Course Units</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" style="margin-top: -22px">
+            <div id="academic-levels" class="tab-pane active" ng-include="'./views/sample_partials/institution/course/academic-levels/index.html'"></div>
+            <div id="academic-years" class="tab-pane" ng-include="'./views/sample_partials/institution/course/academic-years/index.html'"></div>
+            <div id="course-units" class="tab-pane" ng-include="'./views/sample_partials/institution/course/unit/index.html'"></div>
+        </div>  
+    </div>
+
+    <div ng-if="editCourseToggle === true" class="col-sm-12">
+        <div class="hpanel hprimary primary">
+            <div class="panel-heading hbuilt">
+                Edit Course 
+                <span ng-click="editCourseClick()" class="pointer pull-right btn btn-xs btn-primary">
+                    <i class="fa fa-times"></i>
+                </span>
+            </div>
+            <div class="panel-body">
+                <form ng-submit="updateCourseData()">
+                    <div class="form-group has-feedback {{update_course_validated.response_class}} m-b-sm">
+                        <label>Course Name</label>
+                        <input class="form-control" placeholder="Enter institution name" ng-model="updateCourse.name">
+                        <div class="help-block">
+                            <label class="text-danger w-lg">{{ update_course_validated.response_message}} 
+                                <i ng-if="update_course_validated.response_message != ''" class="fa fa-warning pull-right"></i></label>
+                        </div>
+                    </div>
+                    <div class="form-group text-right m-b-none">
+
+                        <button 
+                            class="btn btn-primary text-white"
+                            ng-disabled="update_course_validated.submit == 'true'">
+                            <i ng-if="update_course_validated.submit == 'true'" class="fa fa-spin fa-spinner"></i> Submit 
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Include the edit modal-->
+<div class="modal fade hmodal-primary" id="modal-edit-course" >
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-body">
+                <span class="pull-right" style="cursor: pointer" data-dismiss="modal"> <i class="fa fa-times"></i></span>
+                <div class="title-text text-primary">Edit Course</div>
+
+            </div>
+        </div>
+    </div>
+</div>

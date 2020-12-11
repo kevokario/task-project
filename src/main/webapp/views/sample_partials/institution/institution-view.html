@@ -1,0 +1,184 @@
+<div data-ui-view>
+
+    <div class="row">
+        <div class="col-sm-12 blockquote"  ng-if="institution.name === undefined">
+            <p class="title-text"> <i class="fa fa-hand-o-left" data-ui-sref="home.institution()"></i>  Invalid institution search!</p>
+            <p>We could't find results! </p>
+        </div>
+    </div>
+
+    <div ng-if="institution.name !== undefined" class="container-fluid">
+        <div class="row">
+            <div class="hpanel hblue m-b-none col-sm-12">
+                <div class="panel-heading" style="padding-bottom: 1px">
+                    <span class="text-primary title-text">
+                        <span class="pointer" data-ui-sref="home.institution()">{{institution.name}}</span>
+                        <button class="btn btn-xs btn-primary pull-right text-white" 
+                              ng-click="editInstitutionClick()">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class=" row m-b-md">
+            <div class="col-sm-3 widget-panel widget-label">
+                <div class="hpanel m-b-none">
+                    <div class="panel-body p-sm">
+
+                        <p class="pull-left m-b-none text-primary text-bold">
+                            Schools<br> 
+                            <span class="text-center border-bottom">4</span>
+                        </p>
+                        <span class="text-primary custom-icon-holder pull-right">
+                            <i class="pe pe-7s-home fa-lg"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 widget-panel widget-label">
+                <div class="hpanel m-b-none">
+                    <div class="panel-body p-sm">
+                        <p class="pull-left m-b-none pull-left text-primary text-bold">
+                            Departments<br> 
+                            <span class="text-center border-bottom">{{institution.departments}}</span>
+                        </p>
+                        <span class="text-center text-primary custom-icon-holder pull-right">
+                            <i class="pe pe-7s-culture fa-lg"></i>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 widget-panel widget-label">
+                <div class="hpanel m-b-none">
+                    <div class="panel-body p-sm">
+                        <p class="pull-left m-b-none pull-left text-primary text-bold">
+                            Courses <br> 
+                            <span class="border-bottom">{{institution.courses}}</span>
+                        </p>
+                        <span class="text-center text-primary custom-icon-holder pull-right">
+                            <i class="pe pe-7s-news-paper fa-lg" style="transform: rotate(200deg)"></i>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 widget-panel widget-label">
+                <div class="hpanel m-b-none">
+                    <div class="panel-body p-sm">
+                        <p class="pull-left m-b-none pull-left text-primary text-bold">
+                            Students <br> 
+                            <span class="border-bottom">{{institution.students}}</span>
+                        </p>
+                        <span class="text-center text-primary custom-icon-holder pull-right">
+                            <i class="pe pe-7s-users fa-lg"></i>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div ng-if="editInstitutionToggle !== true" class="col-sm-12">
+                <ul class="nav nav-tabs border-primary">
+                    <li >
+                        <a  data-toggle="tab" data-target="#instituion-school">
+                            <span class="show-on-small">
+                                <i class="pe pe-7s-home fa-lg"></i>
+                            </span> <span class="show-on-large">Schools</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  data-toggle="tab" data-target="#instituion-department">
+                            <span class="show-on-small">
+                                <i class="pe pe-7s-culture fa-lg"></i>
+                            </span>
+                            <span class="show-on-large">Departments</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a  data-toggle="tab" data-target="#instituion-course">
+                            <span class="show-on-small">
+                                <i class="pe pe-7s-news-paper fa-lg" style="transform: rotate(200deg)"></i>
+                            </span> <span class="show-on-large">Courses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  data-toggle="tab" data-target="#instituion-student">
+                            <span class="show-on-small">
+                                <i class="pe pe-7s-users fa-lg"></i>
+                            </span> <span class="show-on-large">Students</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div id="instituion-school" class="tab-pane" ng-include="'./views/sample_partials/institution/faculty.html'"></div>
+                    <div id="instituion-department" class="tab-pane" ng-include="'./views/sample_partials/institution/department.html'"></div>
+                    <div id="instituion-course" class="tab-pane active" ng-include="'./views/sample_partials/institution/course/index.html'"></div>
+                    <div id="instituion-student" class="tab-pane" ng-include="'./views/sample_partials/institution/student/index.html'"></div>
+                </div>
+            </div>
+
+            <div ng-if="editInstitutionToggle === true" class="col-sm-12">
+                <div class="hpanel hprimary primary  m-t-none">
+                    <div class="panel-heading hbuilt">
+                        Edit Institution 
+                        <button class="btn btn-xs btn-primary text-white pull-right" ng-click="editInstitutionClick()">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="panel-body p-sm table-responsive">
+                        <form id="newinstitutionform" ng-submit="EditInstitution()">
+                            <div class="form-group has-feedback {{validate_institution.response_class}} m-b-sm">
+                                <label>Institution Name</label>
+                                <input class="form-control" placeholder="Enter institution name" ng-model="update_institution.name">
+                                <div class="help-block">
+                                    <label class="text-danger w-lg">{{validate_institution.response_message}}
+                                        <i ng-if="validate_institution.response_message !== ''" class="fa fa-warning pull-right"></i></label>
+                                </div>
+                            </div>
+                            <div class="form-group text-right m-b-none">
+                                <button class="btn btn-primary text-white" 
+                                        ng-disabled="submit === 'true'">
+                                    <i ng-if="submit === 'true'" class="fa fa-spin fa-spinner"></i> 
+                                    Submit 
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade hmodal-info" id="modal-edit-institution" >
+        <div class="modal-dialog modal-dialog-sm">
+            <div class="modal-content">
+                <div class="color-line"></div>
+                <div class="modal-body">
+                    <span class="pull-right" style="cursor: pointer" data-dismiss="modal"> <i class="fa fa-times"></i></span>
+                    <h4 class="modal-title">Edit Institution</h4>
+                    <form id="newinstitutionform" ng-submit="EditInstitution()">
+                        <div class="form-group has-feedback {{validate_institution.response_class}} m-b-sm">
+                            <label>Institution Name</label>
+                            <input class="form-control" placeholder="Enter institution name" ng-model="update_institution.name">
+                            <div class="help-block">
+                                <label class="text-primary w-lg">{{validate_institution.response_message}}
+                                    <i ng-if="validate_institution.response_message != ''" class="fa fa-warning pull-right"></i></label>
+                            </div>
+                        </div>
+                        <div class="form-group text-right m-b-none">
+                            <button class="btn btn-info text-white" ng-disabled="submit == 'true'">Submit <i ng-if="submit == 'true'" class="fa fa-spin fa-spinner"></i> </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

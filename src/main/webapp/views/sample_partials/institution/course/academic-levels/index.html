@@ -1,0 +1,97 @@
+<!--Have a table to display the units-->
+<div class="hpanel hprimary primary  m-t-md">
+    <div class="panel-heading hbuilt">
+        {{name}} - Course Levels 
+        <span class="btn btn-xs btn-primary text-white pull-right" 
+              data-toggle="modal" 
+              data-target="#modal-add-level">
+            <i class="fa fa-plus"></i>
+        </span>
+    </div>
+    <div class="panel-body table-responsive">
+        <div ng-repeat="al in paginate_academic_level.data">
+            <div class="media pointer">
+                <div class="media-left media-middle">
+                    <a class="pull-left btn btn-sm btn-primary font-extra-bold btn-circle text-center">
+                        {{ ((limit_length * paginate_academic_level.page_number) - limit_length) + ($index + 1)}}
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h5 class="text-primary">{{al.name}}</h5>
+<!--                    <small class="text-muted">
+                        <strong class="text-primary">{{c.students}}</strong> 
+                        Students Enrolled
+                    </small>-->
+                </div>
+                <div class="media-right media-middle">
+                    <button ng-click="$event.stopPropagation();deleteCourse(al)"
+                            data-toggle="modal" data-target="#modal-edit-course"
+                            class="btn btn-xs btn-outline btn-danger">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="text-right">
+                <ul class="pagination pagination-sm text-muted">
+                    <li>
+                        <a 
+                            class="pointer" 
+                            ng-class="paginate_academic_level.prev.status === false;disabled"
+                            ng-click="AcademicLevelPagerClicked(paginate_academic_level.prev)" 
+                            ng-disabled="paginate_academic_level.prev.status === false" >
+                            <
+                        </a>
+                    </li>
+                    <li><a class="text-plain">page {{paginate_academic_level.page_number}} of {{paginate_academic_level.pages}}</a></li>
+                    <li>
+                        <a class="pointer" 
+                           ng-click="AcademicLevelPagerClicked(paginate_academic_level.next)" 
+                           ng-class="paginate_academic_level.next.status === false; disabled"
+                           ng-disabled="paginate_academic_level.next.status === false">
+                            >
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Unit Modal-->
+<div class="modal fade hmodal-primary" id="modal-add-level">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-body">
+                <span class="pull-right" data-dismiss="modal"> <i class="fa fa-times"></i></span>
+                <div class="title-text text-primary">Add Course Level</div>
+                <form>
+                    <!--select input field-->
+                    <div class="form-group has-feedback form-group-md">
+                        <label>Course Level</label>
+                        <input class="form-control" placeholder="Course levels"/>
+                        <div class="help-block">
+                            <label class="text-danger w-lg"> 
+                                <!--<i class="fa fa-warning pull-right"></i>-->
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-right m-b-none">
+                        <button 
+                            class="btn btn-outline btn-primary" 
+                            type="reset"> Clear</button>
+                        <button 
+                            class="btn btn-primary text-white">
+                            <i class="fa fa-spin fa-spinner"></i> 
+                            Submit 
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

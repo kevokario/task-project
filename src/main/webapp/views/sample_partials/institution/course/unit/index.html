@@ -1,0 +1,160 @@
+<!--Have a table to display the units-->
+<div class="hpanel hprimary primary  m-t-md">
+    <div class="panel-heading hbuilt">
+        {{name}} - Units 
+        <span class="btn btn-xs btn-primary text-white pull-right" data-toggle="modal" data-target="#modal-add-unit">
+            <i class="fa fa-plus"></i>
+        </span>
+    </div>
+    <div class="panel-body table-responsive">
+        <div ng-repeat="al in paginate_units.data">
+            <div class="media pointer">
+                <div class="media-left media-middle">
+                    <a class="pull-left btn btn-sm btn-primary font-extra-bold btn-circle text-center">
+                        {{ ((limit_length * paginate_units.page_number) - limit_length) + ($index + 1)}}
+                    </a>
+                </div>
+                <div class="media-body" data-ui-sref="home.institution.view.course({courseid:c.courseid})" >
+                    <h5 class="text-primary">{{al.name}}</h5>
+                    <small class="text-muted">
+                        Code <strong class="text-primary">{{al.code}}</strong> {{al.a_level}} <br>
+                        Points<strong class="text-primary"> : {{al.points}}</strong> <br>   
+                        Offered at <strong class="text-primary"> : {{al.a_year}}</strong> {{al.semester}} <br>
+
+                    </small>
+                </div>
+                <div class="media-right media-middle">
+                    <button ng-click="$event.stopPropagation();deleteCourse(al)"
+                            data-toggle="modal" data-target="#modal-edit-course"
+                            class="btn btn-xs btn-outline btn-danger">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="text-right">
+                <ul class="pagination pagination-sm text-muted">
+                    <li>
+                        <a 
+                            class="pointer" 
+                            ng-class="paginate_units.prev.status === false;disabled"
+                            ng-click="UnitPagerClicked(paginate_units.prev)" 
+                            ng-disabled="paginate_units.prev.status === false" >
+                            <
+                        </a>
+                    </li>
+                    <li><a class="text-plain">page {{paginate_units.page_number}} of {{paginate_units.pages}}</a></li>
+                    <li>
+                        <a class="pointer" 
+                           ng-click="UnitPagerClicked(paginate_units.next)" 
+                           ng-class="paginate_units.next.status === false; disabled"
+                           ng-disabled="paginate_units.next.status === false">
+                            >
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!--Add Unit Modal-->
+<div class="modal fade hmodal-primary" id="modal-add-unit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-body">
+                <span class="pull-right" data-dismiss="modal"> <i class="fa fa-times"></i></span>
+                <div class="title-text text-primary">Add Course Unit</div>
+                <form>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!--select input field-->
+                            <div class="form-group has-feedback form-group-md">
+                                <label>Select Academic Level</label>
+                                <select class="form-control">
+                                    <option>Select academic level</option>
+                                    <option>Certificate</option>
+                                    <option>Diploma</option>
+                                    <option>Bachelors</option>
+                                </select>
+                                <div class="help-block">
+                                    <label class="text-danger w-lg"></label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <!--select Academic year-->
+                            <div class="form-group has-feedback form-group-md">
+                                <label>Select Year</label>
+                                <select class="form-control">
+                                    <option>Select year</option>
+                                </select>
+                                <div class="help-block">
+                                    <label class="text-danger w-lg"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--select input field-->
+                    </div>
+
+                    <!--select academic semester offered at-->
+                    <div class="form-group has-feedback  form-group-md">
+                        <label>Select Term/Semester </label>
+                        <select class="form-control">
+                            <option>--select semester--</option>
+                            <option>First Semester</option>
+                            <option>Second Semester</option>
+                            <option>Third Semester</option>
+                        </select>
+                        <div class="help-block">
+                            <label class="text-danger w-lg"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <!--Collect unit name-->
+                            <div class="form-group has-feedback  form-group-md">
+                                <label>Unit Name </label>
+                                <input class="form-control" placeholder="Unit name"/>
+                                <div class="help-block">
+                                    <label class="text-danger w-lg"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <!--Collect Unit code-->
+                            <div class="form-group has-feedback has-error form-group-md">
+                                <label>Unit Code </label>
+                                <input class="form-control" placeholder="Unit code"/>
+                                <div class="help-block">
+                                    <label class="text-danger w-lg"> error message placeholder
+                                        <i class="fa fa-warning pull-right"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group text-right m-b-none">
+                        <button 
+                            class="btn btn-outline btn-primary" 
+                            type="reset"> Clear</button>
+                        <button 
+                            class="btn btn-primary text-white">
+                            <i class="fa fa-spin fa-spinner"></i> 
+                            Submit 
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

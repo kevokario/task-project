@@ -1,0 +1,88 @@
+<div class="hpanel hprimary primary  m-t-none">
+    <div class="panel-heading hbuilt">
+        {{institution.name}} - Schools 
+        <span class="btn btn-xs btn-primary pull-right" data-toggle="modal" data-target="#modal-add-school">
+            <i class="fa fa-plus"></i>
+        </span>
+    </div>
+    <div ng-hide="courses_data.courses.length > 0" class="panel-body p-sm table-responsive">
+        <div  class="blockquote">
+            No Schools/Faculties found for this university
+        </div>
+    </div>
+
+        <div ng-show="courses_data.courses.length > 0" class="panel-body p-sm table-responsive" >
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label m-t-sm"> {{course_pagination.result}} Results</label>
+                    <div class="col-sm-offset-6 col-sm-3">
+                        <input type="text" ng-keyup="courseFilter(course_name)" ng-model="course_name"
+                               placeholder="Search Course" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="c in course_pagination.data">
+                <div class="media pointer"  data-ui-sref="home.institution.view.course({courseid:c.courseid})" >
+                    <div class="media-left media-middle">
+                        <a class="pull-left btn btn-sm btn-primary font-extra-bold btn-circle text-center">
+                            {{ ((course_limit_length * course_pagination.page_number) - course_limit_length) + ($index + 1)}}
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="text-primary">{{c.name}}</h5>
+                        <small class="text-muted">
+                            <strong class="text-primary">{{c.students}}</strong> 
+                            Students Enrolled
+                        </small>
+                    </div>
+                    <div class="media-right media-middle">
+                        <button ng-click="$event.stopPropagation();deleteCourse(c)"
+                                data-toggle="modal" data-target="#modal-edit-course"
+                                class="btn btn-xs btn-outline btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="text-right">
+                    <ul class="pagination pagination-sm text-muted">
+                        <li>
+                            <a 
+                                class="pointer" 
+                                ng-class="course_pagination.prev.status === false;disabled"
+                                ng-click="coursePagerClicked(course_pagination.prev)" 
+                                ng-disabled="course_pagination.prev.status === false" >
+                                <
+                            </a>
+                        </li>
+                        <li><a class="text-plain">page {{course_pagination.page_number}} of {{course_pagination.pages}}</a></li>
+                        <li>
+                            <a class="pointer" 
+                               ng-click="coursePagerClicked(course_pagination.next)" 
+                               ng-class="course_pagination.next.status === false; disabled"
+                               ng-disabled="course_pagination.next.status === false">
+                                >
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade hmodal-primary" id="modal-add-school" >
+    <div class="modal-dialog modal-dialog-sm">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-body">
+                <span class="pull-right" style="cursor: pointer" data-dismiss="modal"> <i class="fa fa-times"></i></span>
+                <div class="title-text text-primary">Add A School</div>
+                <p class="blockquote">School View Place Holder</p>
+            </div>
+        </div>
+    </div>
+</div>
