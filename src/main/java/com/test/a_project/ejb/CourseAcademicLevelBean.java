@@ -1,6 +1,6 @@
 package com.test.a_project.ejb;
 
-import com.test.a_project.entities.Academiclevel;
+//import com.test.a_project.entities.Academiclevel;
 import com.test.a_project.entities.Course;
 import com.test.a_project.entities.Institution;
 import com.test.a_project.jpa.TransactionProvider;
@@ -21,7 +21,7 @@ public class CourseAcademicLevelBean {
     //get all academic levels for a course
     public JsonResponse getAcademicLevels(Integer institutionid, Integer courseid) {
         JsonResponse jr = new JsonResponse(500, "Server error", null);
-        HashMap hm = new HashMap();
+       /* HashMap hm = new HashMap();
         try {
             EntityManager em = provider.getEM();
             Query q = em.createQuery("Select al from Academiclevel al where al.course.institution.institutionid =:institutionid AND al.course.courseid=:courseid");
@@ -62,14 +62,14 @@ public class CourseAcademicLevelBean {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
+        }*/
         return jr;
     }
     
     //add an academic level
-    public JsonResponse addAcademicLevel(Integer institutionid,Integer courseid, Academiclevel academiclevel){
+    public JsonResponse addAcademicLevel(Integer institutionid,Integer courseid/* Academiclevel academiclevel*/){
         JsonResponse jr = new JsonResponse(500,"Server Error",null);
-        try{
+       /* try{
             EntityManager em = provider.getEM();
             Institution i = em.find(Institution.class, institutionid);
             //validation
@@ -78,7 +78,7 @@ public class CourseAcademicLevelBean {
             }
         } catch(Exception ex){
             
-        }
+        }*/
         return jr;
     }
 

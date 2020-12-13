@@ -28,24 +28,31 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                     console.log(courses);
                     $scope.courses_limit = 8;
                     $scope.courses_pagination = validatorFactory.paginate($scope.courses, 1, $scope.courses_limit);
-                    $scope.CoursesPagerClicked = function (object) {
-                        if (object.status === true) {
-                            $scope.courses_pagination = validatorFactory.paginate($scope.courses, object.page, $scope.courses_limit);
-                        }
-                    };
+                    let course = new Array();
+                    $scope.search_course = '';
                     $scope.filterCourses = function (key) {
                         // filter by search function
-                        let course = new Array();
+                        course = new Array();
+                        $scope.search_course = key;
                         for (var i = 0; i < $scope.courses.length; i++) {
                             let course_type = $scope.courses[i].name.toUpperCase();
                             let institute_type = $scope.courses[i].institution.name.toUpperCase();
-
-                            if (course_type.search(key.toUpperCase()) > -1 ||institute_type.search(key.toUpperCase()) > -1 ) {
-                                course.push( $scope.courses[i]);
+                            if (course_type.search(key.toUpperCase()) > -1 || institute_type.search(key.toUpperCase()) > -1) {
+                                course.push($scope.courses[i]);
                             }
                         }
                         //call the pagination function
                         $scope.courses_pagination = validatorFactory.paginate(course, 1, $scope.courses_limit);
+                    };
+                    $scope.CoursesPagerClicked = function (object) {
+                        if (object.status === true) {
+                            if ($scope.search_course.length > 0) {
+                                $scope.courses_pagination = validatorFactory.paginate(course, object.page, $scope.courses_limit);
+                            } else {
+                                $scope.courses_pagination = validatorFactory
+                                        .paginate($scope.courses, object.page, $scope.courses_limit);
+                            }
+                        }
                     };
                 }
             })
@@ -65,15 +72,12 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                     $scope.institution_error = "";
                     let institution_page_limit = 8;
                     $scope.pagination_data = validatorFactory.paginate(institution_data.institutions, 1, institution_page_limit);
-
-                    $scope.pagerClicked = function (object) {
-                        if (object.status === true) {
-                            $scope.pagination_data = validatorFactory.paginate($scope.institution_data.institutions, object.page, institution_page_limit);
-                        }
-                    };
+                    $scope.search_key = '';
+                    let institution = new Array();
                     $scope.filterInstitution = function (key) {
                         // filter by search function
-                        let institution = new Array();
+                        institution = new Array();
+                        $scope.search_key = key;
                         for (var i = 0; i < $scope.institution_data.institutions.length; i++) {
                             let str = $scope.institution_data.institutions[i].name.toUpperCase();
                             if (str.search(key.toUpperCase()) > -1) {
@@ -83,8 +87,18 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                         //call the pagination function
                         $scope.pagination_data = validatorFactory.paginate(institution, 1, institution_page_limit);
                     };
+                    $scope.pagerClicked = function (object) {
+                        if (object.status === true) {
+
+                            if ($scope.search_key.length > 0) {
+                                $scope.pagination_data = validatorFactory.paginate(institution, object.page, institution_page_limit);
+                            } else {
+                                $scope.pagination_data = validatorFactory.paginate($scope.institution_data.institutions, object.page, institution_page_limit);
+                            }
+                        }
+                    };
                     $scope.addInstitutionToggle = false;
-                    $scope.addInstitutionClick = function(){
+                    $scope.addInstitutionClick = function () {
                         $scope.addInstitutionToggle = !$scope.addInstitutionToggle;
                     };
                     $scope.addNewInstitution = function () {
@@ -129,13 +143,10 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                         });
                     }
                     ;
-
                     $scope.clearForm = function () {
                         $scope.feedback_institution = "";
                         $scope.institution_error = "";
                     };
-
-
                     $scope.deleteInstitution = function (i) {
 
                         var text = "Are you sure you want to permanently delete " + i.name + "?";
@@ -201,8 +212,6 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                     $scope.students = students.students;
                     $scope.students_limit_length = 5;
                     $scope.students_pagination = validatorFactory.paginate($scope.students, 1, $scope.students_limit_length);
-
-
                     //------------------------------------
                     //      Edit Instution
                     //------------------------------------
@@ -264,15 +273,12 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                     //--------------------------------
                     //      Course Section Start
                     //--------------------------------
-                    $scope.coursePagerClicked = function (object) {
-                        if (object.status === true) {
-                            $scope.course_pagination = validatorFactory.paginate($scope.courses_data.courses,
-                                    object.page, $scope.course_limit_length);
-                        }
-                    };
+                    let course = new Array();
+                    $scope.search_institution_course = '';
                     $scope.courseFilter = function (key) {
                         // filter by search function
-                        let course = new Array();
+                        $scope.search_institution_course = key;
+                        course = new Array();
                         for (var i = 0; i < $scope.courses_data.courses.length; i++) {
                             let str = $scope.courses_data.courses[i].name.toUpperCase();
                             if (str.search(key.toUpperCase()) > -1) {
@@ -283,6 +289,18 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                         $scope.course_pagination = validatorFactory.paginate(course,
                                 1, $scope.course_limit_length);
                     };
+                    $scope.coursePagerClicked = function (object) {
+                        if (object.status === true) {
+                            if ($scope.search_institution_course.length > 0) {
+                                $scope.course_pagination = validatorFactory.paginate(course,
+                                        object.page, $scope.course_limit_length);
+                            } else {
+                                $scope.course_pagination = validatorFactory.paginate($scope.courses_data.courses,
+                                        object.page, $scope.course_limit_length);
+                            }
+                        }
+                    };
+
                     $scope.new_course = {
                         "institution": $scope.institution.institutionid,
                         "name": ""
@@ -399,64 +417,61 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                         $scope.course_validated.response_class = '';
                         $scope.course_validated.response_message = '';
                     };
-                    $scope.editCourse = function (c) {
-                        $('#modal-edit-course').modal('show');
-                        $scope.update_course = {
-                            institution: $scope.institution.institutionid,
-                            courseid: c.courseid,
-                            name: c.name
-                        };
-                    }
-                    $scope.updateCourse = function () {
-
-                        //simple validation
-                        var course_valid = validatorFactory.validateName($scope.update_course.name, "Course");
-                        if (!course_valid.status) {
-                            $scope.update_course_validated.response_class = "has-error";
-                            $scope.update_course_validated.response_message = course_valid.message;
-                        } else {
-                            //passed Validation
-                            $scope.update_course_validated.response_class = "";
-                            $scope.update_course_validated.response_message = course_valid.message;
-                            $scope.update_course_validated.submit = 'true';
-                            liteService.set($scope.update_course, "api/institution/" + $scope.institution.institutionid + "/courses/update").then(function (resp) {
-                                $scope.update_course_validated.submit = 'false';
-                                if (resp !== null & resp.data !== null && resp.data.response !== null) {
-                                    if (resp.data.status === "success") {
-                                        utilityService.notifySuccess(resp.data.response.message);
-//                                        $scope.new_course = {"institution": $scope.institution.institutionid, "name": ""};
-                                        updateCourseList();
-                                    }
-                                    if (resp.data.status === "error") {
-                                        $scope.update_course_validated.response_class = "has-error";
-                                        $scope.update_course_validated.response_message = resp.data.response.message;
-                                    }
-                                }
-
-                            }).catch(function (exception) {
-
-                                var message = "An error occurred";
-                                $scope.update_course_validated.submit = 'false';
-                                if (exception !== null & exception.data !== null && exception.data.response !== null) {
-                                    message = exception.data.response.message;
-                                }
-                                utilityService.notifyWarning(message);
-                            });
-                        }
-                    };
+//                    $scope.editCourse = function (c) {
+//                        $('#modal-edit-course').modal('show');
+//                        $scope.update_course = {
+//                            institution: $scope.institution.institutionid,
+//                            courseid: c.courseid,
+//                            name: c.name
+//                        };
+//                    };
+//                    $scope.updateCourse = function () {
+//
+//                        //simple validation
+//                        var course_valid = validatorFactory.validateName($scope.update_course.name, "Course");
+//                        if (!course_valid.status) {
+//                            $scope.update_course_validated.response_class = "has-error";
+//                            $scope.update_course_validated.response_message = course_valid.message;
+//                        } else {
+//                            //passed Validation
+//                            $scope.update_course_validated.response_class = "";
+//                            $scope.update_course_validated.response_message = course_valid.message;
+//                            $scope.update_course_validated.submit = 'true';
+//                            liteService.set($scope.update_course, "api/institution/" + $scope.institution.institutionid + "/courses/update").then(function (resp) {
+//                                $scope.update_course_validated.submit = 'false';
+//                                if (resp !== null & resp.data !== null && resp.data.response !== null) {
+//                                    if (resp.data.status === "success") {
+//                                        utilityService.notifySuccess(resp.data.response.message);
+////                                        $scope.new_course = {"institution": $scope.institution.institutionid, "name": ""};
+//                                        updateCourseList();
+//                                    }
+//                                    if (resp.data.status === "error") {
+//                                        $scope.update_course_validated.response_class = "has-error";
+//                                        $scope.update_course_validated.response_message = resp.data.response.message;
+//                                    }
+//                                }
+//
+//                            }).catch(function (exception) {
+//
+////                                var message = "An error occurred";
+////                                $scope.update_course_validated.submit = 'false';
+////                                if (exception !== null & exception.data !== null && exception.data.response !== null) {
+////                                    message = exception.data.response.message;
+////                                }
+//                                utilityService.networkError();//(message);
+//                            });
+//                        }
+//                    };
                     //---------------------------------
                     //      Student Section Start
                     //---------------------------------
-                    $scope.studentPagerClicked = function (object) {
-                        if (object.status === true) {
-                            $scope.students_pagination = validatorFactory.paginate($scope.students, object.page,
-                                    $scope.students_limit_length);
-
-                        }
-                    };
+                    
+                    let student = new Array();
+                    $scope.search_institution_student = '';
                     $scope.studentsFilter = function (key) {
                         // filter by search function
-                        let student = new Array();
+                        student = new Array();
+                        $scope.search_institution_student = key;
                         for (var i = 0; i < $scope.students.length; i++) {
                             let str = $scope.students[i].studentname.toUpperCase();
                             if (str.search(key.toUpperCase()) > -1) {
@@ -466,6 +481,17 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
                         //call the pagination function
                         $scope.students_pagination = validatorFactory.paginate(student,
                                 1, $scope.students_limit_length);
+                    };
+                    $scope.studentPagerClicked = function (object) {
+                        if (object.status === true) {
+                            if ($scope.search_institution_student.length > 0) {
+                                $scope.students_pagination = validatorFactory.paginate(student, object.page,
+                                        $scope.students_limit_length);
+                            } else {
+                                $scope.students_pagination = validatorFactory.paginate($scope.students, object.page,
+                                        $scope.students_limit_length);
+                            }
+                        }
                     };
                     $scope.new_student = {
                         "name": null,
@@ -602,11 +628,6 @@ function configState($stateProvider, $urlRouterProvider, $httpProvider) {
             });
 }
 ;
-
-
-
-
-
 $(document).ready(function () {
     fixWrapperHeight(), setBodySmall();
 });
@@ -639,7 +660,6 @@ angular.module("homer").directive("landingScrollspy", landingScrollspy);
 angular.module("homer").controller("appCtrl", appCtrl);
 angular.module("homer").factory("sweetAlert", sweetAlert);
 angular.module("homer").directive("touchSpin", touchSpin);
-
 angular.module("homer").controller("IndexController", function () {
 //    alert("welcome");
 });

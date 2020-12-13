@@ -11,7 +11,7 @@
                     </ol>
                 </div>
                 <h3  data-ui-sref="home.index()"
-                     class="pointer font-normal font-bold m-b-xs m-t-xs text-primary" style="display: inline-block">
+                     class="pointer font-normal font-bold m-b-xs m-t-xs text-primary" style="display: inline-block; font-size:16px;">
                     Institutions
                 </h3>
             </div>
@@ -45,7 +45,7 @@
             <div  class="pull-left">
                 <label>{{pagination_data.result}} Results</label>
             </div>
-            <div class="pull-right">
+            <div ng-if="pagination_data.pages > 1" class="pull-right">
                 <ul class="pagination text-muted">
                     <li>
                         <a 
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <div class="row"  ng-if="addInstitutionToggle !== true">
+    <div class="row "  ng-if="addInstitutionToggle !== true">
         <div ng-repeat="i in pagination_data.data" 
              class="col-sm-4 col-md-4 col-lg-3 widget-panel">
             <div   class="panel custom-panel text-center ">
@@ -78,8 +78,8 @@
                      data-ui-sref="home.institution.view({institutionid: i.institutionid})">
                     <span ng-click="$event.stopPropagation();deleteInstitution(i)" class="pointer pull-right close">&times;</span>
                     <img src="./images/wolverine_square.jpg" alt="Image">
-                    <p><strong class="text-primary">{{i.name}}</strong></p>
-                    <table class="table m-b-n">
+                    <p class="media-text m-b-none"><strong class="text-primary">{{i.name}}</strong></p>
+                    <table class="table m-b-n media-table">
                         <tr>
                             <td class="text-left">
                                 <span class="font-bold text-primary">{{i.courses}}</span>
@@ -94,8 +94,10 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+
+
 
     <div ng-if="addInstitutionToggle === true" class="row">
         <div class="col-sm-12">
@@ -127,44 +129,3 @@
         </div>
     </div>
 </div>
-
-<!--
-    <div class="col-md-12 col-xs-12">
-        <div class="hpanel hblue">
-            <div class="panel-heading hbuilt" style="padding-bottom: 1px" >
-                <h3 class="text-bold" >
-                    <span class="pointer" data-ui-sref="home.index()">All Institutions </span>
-                    <span class="btn btn-sm btn-info pull-right" data-toggle="modal" data-target="#myModal">
-                        <i class="fa fa-plus"></i>
-                    </span>
-                </h3>
-            </div>
-            <div class="panel-body table-responsive">
-                <table data-datatable="ng"
-                       class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <td>#</td>
-                            <td>Name</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="i in institution_data.institutions" 
-                            style="cursor: pointer" 
-                            ui-sref="home.institution.view({institutionid: i.institutionid})">
-                            <td>{{institution_data.institutions.length - $index}}</td>
-                            <td>{{i.name}}</td>
-                            <td>
-                                <button class="btn btn-xs btn-outline btn-danger pull-right" 
-                                        ng-click="$event.stopPropagation();deleteInstitution(i)">
-                                    <i class="fa fa-trash-o"/>
-                                </button>                                     
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div> -->
-<!--</div>-->

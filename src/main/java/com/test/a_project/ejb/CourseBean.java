@@ -233,13 +233,13 @@ public class CourseBean {
                         } else {
                             //save to db unsuccessful
                             hm.put("status", "error");
-                            rs.put("message", "Course " + course_name + " could not be added!");
+                            rs.put("message", "This Course could not be added!");
                             hm.put("response", rs);
                         }
                     } else {
                         //duplicate found
                         hm.put("status", "error");
-                        rs.put("message", "Course " + course_name + " is already Registered!");
+                        rs.put("message", "This course is already Registered!");
                         hm.put("response", rs);
                     }
 
@@ -299,13 +299,13 @@ public class CourseBean {
                         } else {
                             //save to db unsuccessful
                             hm.put("status", "error");
-                            rs.put("message", "Course " + course_name + " could not be Updated!");
+                            rs.put("message", "This course could not be Updated!");
                             hm.put("response", rs);
                         }
                     } else {
                         //duplicate found
                         hm.put("status", "error");
-                        rs.put("message", "Course " + course_name + " is Already Regustered!");
+                        rs.put("message", "This course is Already Regustered!");
                         hm.put("response", rs);
                     }
 

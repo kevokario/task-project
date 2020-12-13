@@ -12,8 +12,12 @@
 }
 .help-block label{
     /* width: 98%; */
+    font-weight: 200;
     display: block;
     padding-right: 9px;
+}
+.help-block label:first-letter{
+    text-transform: capitalize;
 }
 .help-block i{
     margin-top: -24px;

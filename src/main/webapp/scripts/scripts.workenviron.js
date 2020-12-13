@@ -2,7 +2,7 @@ angular.module("homer").controller("ViewInstitutionCourseController",
         function (course, $scope, utilityService, validatorFactory, liteService) {
             $scope.course = course.courses[0];
             $scope.limit_length = 5;
-            
+
             $scope.update_course_validated = {
                 response_class: '',
                 response_message: '',
@@ -48,16 +48,19 @@ angular.module("homer").controller("ViewInstitutionCourseController",
                     }).catch(function (exception) {
 
                         var message = "An error occurred";
+                        var text = "Network Error! Please check your internet connection then try again, notify Admin if this error persists!";
+
+                        console.log(exception);
                         $scope.update_course_validated.submit = 'false';
                         if (exception !== null & exception.data !== null && exception.data.response !== null) {
                             message = exception.data.response.message;
                         }
-                        utilityService.notifyWarning(message);
+                        utilityService.notifyDanger(text);
                     });
                 }
             };
 
-           
+
             $scope.academic_level = [
                 {id: 1, name: "Certificate Level"},
                 {id: 2, name: "Diploma Level"},

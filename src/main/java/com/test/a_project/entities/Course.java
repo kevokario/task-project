@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author litem
+ * @author kario
  */
 @Entity
-@Table(name = "course", catalog = "education", schema = "")
+@Table(name = "course")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c")
@@ -38,26 +38,20 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Course.findByName", query = "SELECT c FROM Course c WHERE c.name = :name")})
 public class Course implements Serializable {
 
-    @OneToMany(mappedBy = "course")
-    private List<Academiclevel> academiclevelList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
-    private List<Unit> unitList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "courseid", nullable = false)
+    @Column(name = "courseid")
     private Integer courseid;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
-    @Column(name = "name", nullable = false, length = 250)
+    @Column(name = "name")
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
     private List<Student> studentList;
-    @JoinColumn(name = "institution", referencedColumnName = "institutionid", nullable = false)
+    @JoinColumn(name = "institution", referencedColumnName = "institutionid")
     @ManyToOne(optional = false)
     private Institution institution;
 
@@ -129,24 +123,6 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "com.test.a_project.entities.Course[ courseid=" + courseid + " ]";
-    }
-
-    @XmlTransient
-    public List<Unit> getUnitList() {
-        return unitList;
-    }
-
-    public void setUnitList(List<Unit> unitList) {
-        this.unitList = unitList;
-    }
-
-    @XmlTransient
-    public List<Academiclevel> getAcademiclevelList() {
-        return academiclevelList;
-    }
-
-    public void setAcademiclevelList(List<Academiclevel> academiclevelList) {
-        this.academiclevelList = academiclevelList;
     }
     
 }

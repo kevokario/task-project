@@ -26,39 +26,39 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author litem
+ * @author kario
  */
 @Entity
-@Table(name = "student", catalog = "education", schema = "")
+@Table(name = "student")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")
     , @NamedQuery(name = "Student.findByStudentid", query = "SELECT s FROM Student s WHERE s.studentid = :studentid")
     , @NamedQuery(name = "Student.findByName", query = "SELECT s FROM Student s WHERE s.name = :name")
+    , @NamedQuery(name = "Student.findByDateOfBirth", query = "SELECT s FROM Student s WHERE s.dateOfBirth = :dateOfBirth")
     , @NamedQuery(name = "Student.findByUpdatedOn", query = "SELECT s FROM Student s WHERE s.updatedOn = :updatedOn")})
 public class Student implements Serializable {
-
-    @Column(name = "date_of_birth")
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "studentid", nullable = false)
+    @Column(name = "studentid")
     private Integer studentid;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 250)
-    @Column(name = "name", nullable = false, length = 250)
+    @Column(name = "name")
     private String name;
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfBirth;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "updated_on", nullable = false)
+    @Column(name = "updated_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedOn;
-    @JoinColumn(name = "course", referencedColumnName = "courseid", nullable = false)
+    @JoinColumn(name = "course", referencedColumnName = "courseid")
     @ManyToOne(optional = false)
     private Course course;
 
@@ -89,6 +89,14 @@ public class Student implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Date getUpdatedOn() {
@@ -130,14 +138,6 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         return "com.test.a_project.entities.Student[ studentid=" + studentid + " ]";
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
     
 }

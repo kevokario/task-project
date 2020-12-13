@@ -31,6 +31,8 @@ angular.module("homer").service("utilityService", function (notify) {
         this.showNotification(text, notify_class);
     };
     this.networkError = function(){
-        this.notifyDanger("Network Error! Please check your internet connection then try again, notify Admin if this error persists!");
-    }
+        var notify_class = "alert-danger";
+        var text = "Network Error! Please check your internet connection then try again, notify Admin if this error persists!";
+        this.showNotification(text, notify_class);
+    };
 });

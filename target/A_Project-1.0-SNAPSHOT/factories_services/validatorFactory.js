@@ -67,7 +67,7 @@ angular.module("homer").factory("validatorFactory", function () {
             data: new Array(),
             page_number: 1,
             pages: 1,
-            result:list.length
+            result:0
         };
         let length = limit;
         let data_list = new Array();
@@ -94,6 +94,7 @@ angular.module("homer").factory("validatorFactory", function () {
         response.page_number = pageNumber;
         //set current data table
         response.data = data_list;
+        response.result = list.length;
 
         let prev_page = pageNumber - 1;
         let next_page = pageNumber + 1;

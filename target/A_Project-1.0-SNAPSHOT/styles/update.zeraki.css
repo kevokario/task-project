@@ -5,6 +5,12 @@
     margin-bottom: 3px;
     display: block;
 }
+.title-text span{
+    font-size: initial;
+}
+.panel-heading{
+    text-transform: capitalize;
+}
 #course-list .media:first-child{
     margin-top: 7px;
 }
@@ -146,7 +152,13 @@
     font-size: 12px;
     line-height: 1.5;
 }
+.media-table td{
+    border: none !important;
+}
 
+#side-menu .pe{
+    font-weight: 600;
+}
 @media(max-width:768px){
     .widget-panel{
         position: relative;
@@ -188,6 +200,10 @@
     .widget-label {
         width: 49.45%;
     }
+    .content {
+        padding: 0px;
+        min-width: 320px;
+    }
 }
 @media(max-width:450px){
     .widget-panel{
@@ -207,8 +223,16 @@
 
     }
     .custom-panel img{
-        display: none;
+        position: absolute;
+        left: 10px;
+        width: 20%;
+        top: 0;
     }
+    .media-text,.media-table{
+        width: 80% !important;
+        margin-left: 20%;
+    }
+
 }
 
 @media(max-width:358px){

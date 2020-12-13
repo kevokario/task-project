@@ -10,7 +10,7 @@
                 </ol>
             </div>
             <h3  data-ui-sref="home.index()"
-                 class="pointer font-normal font-bold m-b-xs m-t-xs text-primary" style="display: inline-block">
+                 class="pointer font-normal font-bold m-b-xs m-t-xs text-primary" style="display: inline-block;font-size: 16px;">
                 Courses
             </h3>
         </div>
@@ -32,7 +32,7 @@
         <div  class="pull-left">
             <label>{{courses_pagination.result}} Results</label>
         </div>
-        <div class="pull-right">
+        <div ng-if="courses_pagination.pages>1" class="pull-right">
             <ul class="pagination text-muted">
                 <li>
                     <a class="pointer" 
